@@ -5,6 +5,7 @@ import morgan from "morgan";
 import path from "path";
 import "./src/database/dbConnection"
 import routerRecetas from "./src/routes/recetas.routes";
+import routerUsuarios from "./src/routes/usuarios.routes";
 
 dotenv.config()
 
@@ -25,3 +26,4 @@ app.use(express.static(path.join(__dirname, `/public`)))
 // rutas
 // http://localhost:4002/crudrecetas/recetas
 app.use("/crudrecetas", routerRecetas)
+app.use("/crudrecetas", routerUsuarios)
