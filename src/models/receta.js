@@ -5,15 +5,15 @@ const recetaSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        minLength: 1,
-        maxLength: 100
+        minlength: 1,
+        maxlength: 100
     },
     ingredientes:{
         type: String,
         required: true,
         unique: true,
-        minLength: 3,
-        maxLength: 500
+        minlength: 3,
+        maxlength: 500
     },
     dificultad:{
         type: String,
@@ -22,8 +22,8 @@ const recetaSchema = new Schema({
     tiempo:{
         type: Number,
         required: true,
-        minLength: 1,
-        maxLength: 3,
+        minlength: 1,
+        maxlength: 3,
         min: 1,
         max: 200
     },
@@ -31,8 +31,8 @@ const recetaSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        minLength: 3,
-        maxLength: 1500
+        minlength: 3,
+        maxlength: 1500
     },
     imagen:{
         type: String,

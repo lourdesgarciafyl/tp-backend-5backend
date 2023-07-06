@@ -26,4 +26,4 @@ app.use(express.static(path.join(__dirname, `/public`)))
 // rutas
 // http://localhost:4002/crudrecetas/recetas
 app.use("/crudrecetas", routerRecetas)
-app.use("/crudrecetas", routerUsuarios)
+app.use("/crudrecetas/auth", routerUsuarios)

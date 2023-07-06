@@ -3,8 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const usuarioSchema = new Schema({
     nombreUsuario:{
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     email:{
         type: String,
@@ -13,8 +12,7 @@ const usuarioSchema = new Schema({
     },
     password:{
         type: String,
-        required: true,
-        unique: true
+        required: true
     }
 })
 
