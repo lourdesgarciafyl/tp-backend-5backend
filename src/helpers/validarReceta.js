@@ -15,7 +15,7 @@ const validarReceta = [
     check("dificultad")
     .notEmpty()
     .withMessage("La dificultad es una dato obligatorio")
-    .isIn(["facil", "intermedio", "dificil"])
+    .isIn(["Facil", "Intermedio", "Dificil"])
     .withMessage("La dificultad debe ser una opción válida"),
     check("tiempo")
     .notEmpty()
@@ -36,7 +36,6 @@ const validarReceta = [
     check("imagen")
     .notEmpty()
     .withMessage("La imagen es un dato obligatorio")
-    // recordar cambiar la exp reg de la imagen en el CRUD FRONTEND!!
     .matches(/^(http(s?):)([/|.|\w|\s|-])*\.(?:png|jpe?g|gif|svg)$/)
     .withMessage("Debe ingresar un link terminado en jpg, gif o png"),
     (req, res, next) => {resultadoValidacion(req, res, next)}
