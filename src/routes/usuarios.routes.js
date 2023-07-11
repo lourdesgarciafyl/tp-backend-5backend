@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { controladorPruebaUsuario, crearUsuario, obtenerListaUsuarios, obtenerUsuario } from "../controllers/usuarios.controllers";
+import { controladorPruebaUsuario, crearUsuario, login, obtenerListaUsuarios, obtenerUsuario } from "../controllers/usuarios.controllers";
 import { check } from "express-validator";
 
 const routerUsuarios = Router()
 
 routerUsuarios.route("/pruebausuario").get(controladorPruebaUsuario)
-routerUsuarios.route("/usuarios").get(obtenerListaUsuarios)
+routerUsuarios.route("/").get(obtenerListaUsuarios).post(login)
 routerUsuarios.route("/nuevo").post(
     [
         check("nombreUsuario")

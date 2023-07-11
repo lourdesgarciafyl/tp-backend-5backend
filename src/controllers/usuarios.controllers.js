@@ -1,5 +1,5 @@
 import Usuario from "../models/usuario";
-import { validationResult } from "express-validator";
+import bcrypt from "bcrypt";
 
 export const controladorPruebaUsuario = (req, res) => {
     res.send("Esta es una prueba de mi ruta get")
@@ -7,16 +7,7 @@ export const controladorPruebaUsuario = (req, res) => {
 
 export const crearUsuario = async (req, res) =>{
     try{
-    //trabajar con los resultados de la validacion
-       const errors = validationResult(req);
-    //errors.isEmpty(); true: si esta vacio, es false si tiene errores;
-    //quiero saber si hay errores
-    if(!errors.isEmpty()){
-        return res.status(400).json({
-            errores: errors.array()
-        }) 
-    }
-        const { email } = req.body;
+    const { email, password } = req.body;
     //verificar si el email ya existe
     let usuario = await Usuario.findOne({ email }); //devulve un null
     console.log(usuario);
@@ -28,6 +19,10 @@ export const crearUsuario = async (req, res) =>{
     }
     //guardamos el nuevo usuario en la BD
     usuario = new Usuario(req.body);
+    // encriptamos la password
+    const salt = bcrypt.genSaltSync(10);
+    usuario.password = bcrypt.hashSync(password, salt)
+
     await usuario.save();
     res.status(201).json({
       mensaje: "usuario creado",
@@ -37,7 +32,7 @@ export const crearUsuario = async (req, res) =>{
     }catch(error){
         console.log(error);
         res.status(404).json({
-            mensaje: "Error. No se pudo dar de alta el usuario"
+            mensaje: "El usuario no pudo ser creado."
         })
     }
 }
@@ -63,5 +58,32 @@ export const obtenerUsuario = async (req, res) => {
         res.status(404).json({
             mensaje: "Error. No se pudo obtener el usuario"
         })
+    }
+}
+
+export const login = async (req, res) =>{
+    try{
+        const {email, password} = req.body
+        let usuario = await Usuario.findOne({email});
+        if(!usuario){
+        return res.status(404).json({
+        mensaje: 'Correo o password invalido - correo'
+      })
+    }
+        const passwordValido = bcrypt.compareSync(password, usuario.password);
+        if(!passwordValido){
+            return res.status(404).json({
+              mensaje: 'Correo o password invalido - password'
+            })
+          }
+        res.status(200).json({
+        mensaje: 'El usuario es correcto',
+        nombreUsuario: usuario.nombreUsuario
+          })  
+    }catch(error){
+    console.log(error);
+    res.status(404).json({
+      mensaje: "Usuario o password incorrecto",
+    });
     }
 }
